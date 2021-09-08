@@ -1,7 +1,7 @@
 POSTCLOB : Calling program
 ctl-opt option(*srcstmt:*nodebugio);                   
 ctl-opt dftActgrp(*no) actGrp(*caller);                
-                                                       
+    // comment                                                   
 copy QRPGLESRC,POSTCLOB_C                              
                                                        
 dcl-pi postClob_t;                                     
