@@ -1,0 +1,37 @@
+Binding Directory:   JMBIND         
+Object       Type         Library   
+QZHBCGI      *SRVPGM      QHTTPSVR  
+
+     Ctl-Opt BndDir('QC2LE':'JMBIND');                  
+                                                        
+     // External Procedure for writing data into browser
+       Dcl-PR  WriteToWeb  ExtProc('QtmhWrStout');      
+         Datavar     Char(65535)   Options(*Varsize);   
+         DataVarLen  Int(10)       Const;               
+         ErrCode     Char(8000)    Options(*Varsize);   
+       End-PR;                                          
+                                                        
+      Dcl-DS  ErrDS   Qualified;                        
+        BytesProv   Int(10)   Inz(0);                   
+        BytesAvail  Int(10)   Inz(0);                   
+      End-DS;                                           
+                                                        
+      // Standard Error Data Structure                  
+         /COPY QSYSINC/QRPGLESRC,QUSEC                  
+                                                        
+    // Local Variables                                  
+       Dcl-S   Data    Char(5000);   
+       Dcl-C   CRLF    x'0d25';                                       
+                                                                      
+     // setting up header                                             
+       DATA = 'Content-type: Text/html' + CRLF + CRLF ;               
+       writetoweb(DATA: %len(%trim(DATA)): ErrDs);                    
+                                                                      
+       DATA = 'This data will written on web'+ CRLF;                  
+       writetoweb(DATA: %len(%trim(DATA)): ErrDs);                    
+                                                                      
+       DATA = 'Hey Jagdish , This is New Learning for web services';  
+              writetoweb(DATA: %len(%trim(DATA)): ErrDs);
+                                                  
+       *Inlr = *On;                               
+       Return;                                    
